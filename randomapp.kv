@@ -1,0 +1,397 @@
+<RandomAppRoot>
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            Color:
+                rgba: .9215686274509804, .9215686274509804, .9215686274509804, 1
+
+    ScreenManager:
+        id: random_app_screen_manager
+        HomeScreen:
+            id: home_screen
+            name: 'home_screen'
+        NumberScreen:
+            id: number_screen
+            name: 'number_screen'
+        ClockScreen:
+            id: clock_screen
+            name: 'clock_screen'
+        RatingScreen:
+            id: rating_screen
+            name: 'rating_screen'
+
+<Label>
+    font_size: sp(30)
+    color: 0, 0, 0, 1
+
+<Button>
+    color: .51764705882, .57647058823, .65882352941, 1
+    font_name: 'fonts/Roboto-Regular.ttf'
+    background_normal: 'img/ikke_noe.png'
+    background_down: 'img/ikke_noe.png'
+
+<Box@BoxLayout>
+    pos_hint: {'center_x': .5, 'center_y': .18}
+    size_hint: 1, .1
+
+<Back@Button>
+    text: 'Back'
+    font_size: sp(20)
+
+<BackAndRandomImg@Image>
+    source: 'img/nav_button.png'
+
+<Random@Button>
+    text: 'GIVE ME\nRANDOM'
+    font_size: sp(20)
+
+<Name@Label>
+    font_size: sp(40)
+    pos_hint: {'center_x': .5, 'center_y': .95}
+    font_name: 'fonts/ARIALBD.ttf'
+
+<Tag@Label>
+    font_size: sp(18)
+
+<SmallInput@TextInput>
+    font_size: sp(18)
+    background_normal: 'img/input_small.png'
+    background_down: 'img/input_small.png'
+
+<BigInput@TextInput>
+    font_size: sp(18)
+    background_normal: 'img/input_big.png'
+    background_down: 'img/input_big.png'
+
+<Fain@Button>
+    font_size: sp(20)
+    background_normal: 'img/ikke_noe.png'
+    background_down: 'img/ikke_noe.png'
+
+<ScreenButtonImg@Image>
+    source: 'img/screen_button.png'
+
+<HomeScreen>
+    FloatLayout:
+        Button:
+            size_hint: .1, .05
+            pos_hint: {"center_x": .06, "center_y": .97}
+            text: 'INFO'
+            font_size: pt(9)
+            background_normal: 'ikke_noe.png'
+            background_down: 'ikke_noe.png'
+            color: .0, .0, .0, 1
+            on_press:
+                root.info_popup()
+
+        Name:
+            pos_hint: {'center_x': .5, 'center_y': .9}
+            font_size: sp(70)
+            text: 'Random'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint_y: .4
+            orientation: 'vertical'
+            spacing: 20
+
+            Fain:
+                text: 'Random Number'
+                on_press:
+                    root.manager.current = 'number_screen'
+
+            Fain:
+                text: 'Random Clock'
+                on_press:
+                    root.manager.current = 'clock_screen'
+
+            Fain:
+                text: 'Random List'
+                on_press:
+                    root.manager.current = 'rating_screen'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint_y: .4
+            orientation: 'vertical'
+            spacing: 20
+
+            ScreenButtonImg:
+
+            ScreenButtonImg:
+
+            ScreenButtonImg:
+
+
+<NumberScreen>
+    on_enter:
+        sn = 0
+        mn = 40
+
+    FloatLayout:
+        Name:
+            text: 'Random Number'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            size_hint: .65, .1
+            orientation: "vertical"
+
+            Tag:
+                text: '\/ Smallest Number \/'
+
+            BigInput:
+                id: sn
+                text: '0'
+
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint: .65, .1
+            orientation: "vertical"
+
+            Tag:
+                text: '\/ Max Number \/'
+
+            BigInput:
+                id: mn
+                text: '40'
+
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .8}
+            size_hint: .8, .1
+
+            BoxLayout:
+                orientation: "vertical"
+                Tag:
+                    text: '\/ Smallest Number   '
+
+                Tag:
+                    text: sn.text
+
+            BoxLayout:
+                orientation: "vertical"
+                Tag:
+                    text: '\/ Max Number \/'
+
+                Tag:
+                    text: mn.text
+
+        Box:
+            Back:
+                on_press:
+                    root.manager.current = 'home_screen'
+            Random:
+                on_press:
+                    root.goto(sn.text, mn.text)
+
+        Box:
+            BackAndRandomImg:
+
+            BackAndRandomImg:
+
+
+<RandomNumberPopup>
+    on_open: root.get()
+    title: 'Random Number'
+    size_hint: .5, .3
+  #  size: 400, 400
+    GridLayout:
+        cols: 1
+        Label:
+            text: str(root.r)
+            color: 1, 1, 1, 1
+
+
+
+<ClockScreen>
+    FloatLayout:
+        Name:
+            text: 'Random Clock'
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .87}
+            size_hint: .65, .1
+            Tag:
+                text: ''
+
+            Tag:
+                text: 'Smallest'
+
+            Tag:
+                text: 'Biggest'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .82}
+            size_hint: .65, .1
+            Tag:
+                text: 'Hours'
+
+            Tag:
+                text: r1t.text
+
+            Tag:
+                text: r2t.text
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .72}
+            size_hint: .65, .1
+            Tag:
+                text: 'Minutes'
+
+            Tag:
+                text: r1m.text
+
+            Tag:
+                text: r2m.text
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            size_hint: .65, .044
+            Tag:
+                text: 'Min Hours'
+            SmallInput:
+                id: r1t
+                text: '0'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            size_hint: .65, .044
+
+            Tag:
+                text: 'Max Hours'
+            SmallInput:
+                id: r2t
+                text: '24'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint: .65, .044
+
+            Tag:
+                text: 'Min Minutes'
+
+            SmallInput:
+                id: r1m
+                text: '0'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .3}
+            size_hint: .65, .044
+
+            Tag:
+                text: 'Max Minutes'
+
+            SmallInput:
+                id: r2m
+                text: '60'
+
+        Box:
+            Back:
+                on_press:
+                    root.manager.current = 'home_screen'
+            Random:
+                on_press:
+                    root.goto(r1t.text, r2t.text, r1m.text, r2m.text)
+
+        Box:
+            BackAndRandomImg:
+
+            BackAndRandomImg:
+
+
+<RandomClockPopup>
+    on_open: root.get()
+    title: 'Random Clock'
+    size_hint: .5, .3
+ #   size: 400, 400
+    BoxLayout:
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        size_hint: .1, .1
+        Label:
+            text: str(root.rh)
+            color: 1, 1, 1, 1
+        Label:
+            text: ':'
+            color: 1, 1, 1, 1
+        Label:
+            text: str(root.rm)
+            color: 1, 1, 1, 1
+
+<RatingScreen>
+    FloatLayout:
+        Name:
+            text: 'Random Rating'
+
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            orientation: "vertical"
+            size_hint: 1, .5
+            Tag:
+                text: 'Person 1'
+            BigInput:
+                id: person_1
+            Tag:
+                text: 'Person 2'
+            BigInput:
+                id: person_2
+            Tag:
+                text: 'Person 3'
+            BigInput:
+                id: person_3
+            Tag:
+                text: 'Person 4'
+            BigInput:
+                id: person_4
+            Tag:
+                text: 'Person 5'
+            BigInput:
+                id: person_5
+
+        Box:
+            Back:
+                on_press:
+                    root.manager.current = 'home_screen'
+            Random:
+
+
+        Box:
+            BackAndRandomImg:
+
+            BackAndRandomImg:
+
+
+<RandomRatingPopup>
+    on_open: root.get()
+    title: 'Random Rating'
+    size_hint: .5, .3
+  #  size: 400, 400
+    FloatLayout:
+        Label:
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            text: str(root.person_values[root.r])
+            color: 1, 1, 1, 1
+
+<InfoPopup>
+    size_hint: .56, .3
+    pos_hint: {"center_x": .5, "center_y": .5}
+    title: 'Info'
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Made by Nea Pragmata'
+            color: 1, 1, 1, 1
+            font_size: sp(18)
+            background_normal: 'img/ikke_noe.png'
+            background_down: 'img/ikke_noe.png'
+            on_press:
+                root.open_url('http://NeaPragmata.net/')
+        Button:
+            text: 'Icons from Icons8'
+            color: 1, 1, 1, 1
+            font_size: sp(18)
+            background_normal: 'img/ikke_noe.png'
+            background_down: 'img/ikke_noe.png'
+            on_press:
+                root.open_url('https://icons8.com/')
